@@ -98,7 +98,7 @@ def add_post(request):
              "form" : AddPostForm
             }
         return render(request,"account/dash/addpost.html",context)
-@login_required
+
 def update_post(request, slug):
     instance = get_object_or_404(Post, slug=slug)
     form = UpdateForm(request.POST or None, request.FILES or None, instance=instance)
