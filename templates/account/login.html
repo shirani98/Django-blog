@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Login 05</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{% static 'account/login/css/style.css' %}">
+
+	</head>
+	<body>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-5">
+					<div class="wrap">
+						<div class="img" style="background-image: url({% static 'account/login/images/bg-1.jpg' %});"></div>
+						<div class="login-wrap p-4 p-md-5">
+			      	<div class="d-flex">
+			      		<div class="w-100">
+			      			<h3 class="mb-4">Sign In</h3>
+			      		</div>
+								
+			      	</div>
+					  
+					  {% if messages %}
+						  {% for m in messages %}
+							{{m}}
+						  {% endfor %}
+					  {% endif %}
+						  
+							<form action="" method="POST" class="signin-form">{% csrf_token %}
+			      		<div class="form-group mt-3">
+							 
+							{{form.username}}
+			      			<label class="form-control-placeholder" for="username">Email or Phone</label>
+							  
+			      		</div>
+		            <div class="form-group">
+		              {{form.password}}
+		              <label class="form-control-placeholder" for="password">Password</label>
+		              
+		            </div>
+		            <div class="form-group">
+		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+		            </div>
+		            
+		          </form>
+		          <p class="text-center">Not a member? <a href="{% url 'account:signup' %}">Sign Up</a></p>
+		        </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="{% static 'account/login/js/jquery.min.js' %}"></script>
+  <script src="{% static 'account/login/js/popper.js' %}"></script>
+  <script src="{% static 'account/login/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'account/login/js/main.js' %}"></script>
+
+	</body>
+</html>
+

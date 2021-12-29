@@ -1,0 +1,45 @@
+{% extends "post/base.html" %}
+{% load static %}
+{% block title %}
+بلاگ ما      
+{% endblock title %}
+{% block menu %}
+{% for cat in cats %}
+<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'post:cat' cat.title  %}">{{cat.title}}</a></li>
+
+{% endfor %}
+
+{% endblock menu %} 
+{% block post %}
+        <!-- Page Header-->{% if post_detail.image %}
+          
+        {% endif %}
+        <header  dir="rtl" class="masthead" style="background-image: url('{% if post_detail.image %}{{post_detail.image.url}}{% endif %}')">
+                       <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="post-heading">
+                            <h1>{{post_detail.title}}</h1>
+                            <span class="meta">
+                                نوشته شده توسط
+                                <a href="#!">{{post_detail.writer}}</a>
+                                در {{post_detail.create}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Post Content-->
+        <article  dir="rtl" class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p>{{post_detail.body}}</p>
+                       
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endblock post %}
+        

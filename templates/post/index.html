@@ -1,0 +1,67 @@
+{% extends "post/base.html" %}
+{% load static %}
+{% block title %}
+بلاگ ما      
+{% endblock title %}
+{% block menu %}
+{% for cat in cats %}
+<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'post:cat' cat.title  %}">{{cat.title}}</a></li>
+
+{% endfor %}
+
+{% endblock menu %} 
+{% block post %}
+<!-- Page Header-->
+        
+<header class="masthead" style="background-image: url('{% static 'post/assets/img/home-bg.jpg'%}">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            <div class="alert alert-primary text-center">
+            <form name="myform" method="GET" action="{% url 'post:search' %}">  
+                {% csrf_token %}
+                <input type="text" name="search" placeholder="Search" />
+                <input type="submit" value="Search"/>
+            </form> 
+        </div>
+{% for post in posts %}
+
+<div class="post-preview" dir="rtl">
+    <a href="{% url 'post:detail' post.slug %}">
+        <h2 class="post-title">{{post.title|truncatechars:40}}</h2>
+        <h3 class="post-subtitle">{{post.body|truncatechars:50}}</h3>
+    </a>
+    <p class="post-meta">
+        نوشته شده توسط
+        <a href="{% url 'post:writer' post.writer.email %}">{{post.writer.name}}</a>
+        در {{post.create}}
+        
+    </p>
+</div>
+<hr class="my-4" />
+
+{% empty %}
+<p dir="rtl">پستی یافت نشد</p>
+{% endfor %}
+{% endblock post %}
+{% block pagination %}
+{% if posts.has_previous %}
+<a class="btn btn-primary text-uppercase " href="?page={{ posts.previous_page_number }}">New Posts</a>
+{% endif %}
+{% if posts.has_next %}
+<a class="btn btn-primary text-uppercase" href="?page={{ posts.next_page_number }}">Older Posts</a>
+{% endif %}
+{% endblock pagination %}
