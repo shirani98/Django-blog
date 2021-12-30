@@ -49,7 +49,6 @@ def register_user(request):
     form = UserCreate()
     return render (request,"account/signup.html",{"form":form})
 
-@login_required
 def showdashboard(request):
     if request.user.is_superuser :
         posts = Post.objects.all()
