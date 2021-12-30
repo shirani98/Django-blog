@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.core.checks.messages import Info
+from django.db.models.query_utils import Q
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.views import LoginView, LogoutView
@@ -9,8 +10,9 @@ from django.contrib.auth.decorators import login_required
 from account.forms import AddPostForm, LoginForm, UpdateForm, UserCreate
 from account.models import CustomUser
 from post.models import Category, Post
-from django.views.generic.edit import UpdateView
-
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse, reverse_lazy
 
 # Create your views here.
 
@@ -50,13 +52,22 @@ def register_user(request):
     return render (request,"account/signup.html",{"form":form})
 @login_required
 def showdashboard(request):
-    if request.user.is_superuser :
-        posts = Post.objects.all()
-    else:
-        posts = Post.objects.filter(writer = request.user)
-    
+    querysearch = request.GET.get("table_search")
+    if querysearch is None:
+        if request.user.is_superuser :
+            posts = Post.objects.all()
+            cat = Category.objects.all()
+        else:
+            posts = Post.objects.filter(writer = request.user)
+            cat = Category.objects.all()
+    else :
+        querysearch = request.GET.get("table_search")
+        print(querysearch)
+        cat = Category.objects.all()
+        posts = Post.objects.filter(Q(title__contains =querysearch) | Q(body__contains =querysearch) )
     context = {
-        "posts" : posts
+        "posts" : posts,
+        "cats" : cat
     }
     return render(request,"account/dash/dash.html",context)
 @login_required
@@ -133,4 +144,8 @@ def delete_post(request, slug):
         "posts" : posts
     }
     return render(request,"account/dash/dash.html",context)
-        
+class create_cat(LoginRequiredMixin,CreateView):
+    model = Category
+    fields = '__all__'
+    template_name = "account/dash/addcat.html"
+    success_url = reverse_lazy('account:dash')
