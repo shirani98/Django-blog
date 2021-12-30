@@ -62,7 +62,6 @@ def showdashboard(request):
             cat = Category.objects.all()
     else :
         querysearch = request.GET.get("table_search")
-        print(querysearch)
         cat = Category.objects.all()
         posts = Post.objects.filter(Q(title__contains =querysearch) | Q(body__contains =querysearch) )
     context = {
