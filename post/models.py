@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.deletion import CASCADE
+from django.urls import reverse
 
 # Create your models here.
 class PublishManager(models.Manager):
@@ -27,5 +28,8 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     class Meta:
-        ordering = ordering = ['-create']
+        ordering = ['-create']
+    def get_absolute_url(self):
+        return reverse("post:detail", kwargs={"slug": self.slug})
+    
     
