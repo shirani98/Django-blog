@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-wokh@&eq!83-4e07h@xt6vdsirr20&=^kv!o9lln2(faip#8-w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'django.contrib.sites',
     'account.apps.AccountConfig',
-
+    'ckeditor',
+    'ckeditor_uploader',
     
     
 ]
-
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -133,7 +135,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 MEDIA_URL = '/media/' 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -144,6 +146,3 @@ AUTH_USER_MODEL = "account.CustomUser"
 LOGOUT_REDIRECT_URL = "post:index"
 LOGIN_URL = 'account:login'
 LOGIN_REDIRECT_URL = 'account:dash'
-SITE_ID = 1
-ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_LOGOUT_ON_GET = True

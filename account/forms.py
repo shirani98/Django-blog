@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import models, widgets
-
+from ckeditor.widgets import CKEditorWidget
 from post.models import Category, Post
 from .models import CustomUser
 
@@ -31,7 +31,7 @@ class AddPostForm(forms.Form):
     choise_status =(("d","Draft"),("p","Publish"))
     title = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'text','placeholder': 'Enter ...'}))
     slug = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'text','placeholder': 'Enter ...'}))
-    body = forms.CharField(widget=forms.Textarea(attrs={"rows":"5", "class":"form-control",'placeholder': 'Enter ...'}))
+    body = forms.CharField(widget=CKEditorWidget(attrs={"rows":"5", "class":"form-control",'placeholder': 'Enter ...'}))
     image = forms.ImageField(required=False,widget=forms.FileInput(attrs={'class': 'form-control','id' : 'exampleInputFile', 'type': 'file'}))
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all())
     status = forms.ChoiceField(choices=choise_status,widget=forms.Select(attrs={'class': 'form-control'}))

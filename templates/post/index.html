@@ -42,7 +42,7 @@
 <div class="post-preview" dir="rtl">
     <a href="{{post.get_absolute_url}}">
         <h2 class="post-title">{{post.title|truncatechars:40}}</h2>
-        <h3 class="post-subtitle">{{post.body|truncatechars:50}}</h3>
+        <h3 class="post-subtitle">{{post.body|truncatechars:50|safe}}</h3>
     </a>
     <p class="post-meta">
         نوشته شده توسط

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.deletion import CASCADE
 from django.urls import reverse
+from ckeditor_uploader.fields import RichTextUploadingField 
 
 # Create your models here.
 class PublishManager(models.Manager):
@@ -18,7 +19,7 @@ class Post(models.Model):
     choise_status =(("p","Publish"),("d","Draft"))
     title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
-    body = models.TextField()
+    body = RichTextUploadingField ()
     image = models.ImageField(upload_to= "media",blank=True, null=True)
     category = models.ManyToManyField(Category,related_name="postcategory")
     writer = models.ForeignKey(get_user_model(),on_delete=CASCADE)
