@@ -46,7 +46,7 @@ def register_user(request):
             if CustomUser.objects.filter(email=emailfound).exists():
                 messages.error(request,"'This email already exists'")
                 return render (request,"account/signup.html",{"form":form})
-            CustomUser.objects.create_user(data["email"],data["name"],data["password"])
+            CustomUser.objects.create_user(data["email"],data["phone"],data["name"],data["password"])
             return redirect("account:login")
     form = UserCreate()
     return render (request,"account/signup.html",{"form":form})

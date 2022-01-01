@@ -7,14 +7,14 @@ from django.utils import timezone
 
 # Create your models here.
 class AccountManager(BaseUserManager):
-    def create_user(self, email,name , password, **extra_fields):
+    def create_user(self,email,phone,name,password = None, **extra_fields):
         """
         Create and save a User with the given email and password.
         """
         if not email:
             raise ValueError(_('The Email must be set'))
         email = self.normalize_email(email)
-        user = self.model(email=email,name = name, **extra_fields)
+        user = self.model(email=email,phone=phone,name=name, **extra_fields)
         user.set_password(password)
         user.save()
         return user
@@ -35,9 +35,9 @@ class AccountManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15, unique = True)
+    phone = models.CharField(max_length=15)
     date_of_birth = models.DateField(null=True)
     picture = models.ImageField(blank=True, null=True,upload_to = "media")
     is_superuser = models.BooleanField(default=False)

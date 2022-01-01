@@ -5,6 +5,7 @@ from django.forms import models, widgets
 from ckeditor.widgets import CKEditorWidget
 from post.models import Category, Post
 from .models import CustomUser
+from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}))
@@ -24,7 +25,7 @@ class UserCreate(forms.Form):
         password = cleaned_data.get("password")
         confirmed_password = cleaned_data.get("confirmed_password")
         if password != confirmed_password:
-            messages.error(self.request,"password must match")
+            raise forms.ValidationError("password must match")
             
 class AddPostForm(forms.Form):
     
